@@ -7,7 +7,7 @@ use version;
 
 =head1 NAME
 
-CPAN::Packages - The great new CPAN::Packages!
+CPAN::Packages - OO Interface to 02packages.details.txt.gz
 
 =cut
 
@@ -15,14 +15,16 @@ our $VERSION = '0.01';
 
 =head1 SYNOPSIS
 
-Quick summary of what the module does.
+  my $pks = CPAN::Packages->new(file => 't/data/02packages.details.txt.gz');
 
-Perhaps a little code snippet.
+  $pks->get_header('Columns'); # or whatever
 
-    use CPAN::Packages;
+  my $ach = $pks->get_package('ACH');
+  print $ach->{'package name'}."\n";
+  print $ach->{version}->stringify."\n"; version.pm version
+  print $ach->{path}."\n";
 
-    my $packs = CPAN::Packages->new(file => '02packages.details.txt.gz');
-    ...
+  $pks->write_file; # XX not implemented yet
 
 =head1 ATTRIBUTES
 

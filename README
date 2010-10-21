@@ -1,55 +1,68 @@
-CPAN-Packages
+NAME
+    CPAN::Packages - OO Interface to 02packages.details.txt.gz
 
-The README is used to introduce the module and provide instructions on
-how to install the module, any machine dependencies it may have (for
-example C compilers and installed libraries) and any other information
-that should be provided before the module is installed.
+SYNOPSIS
+      my $pks = CPAN::Packages->new(file => 't/data/02packages.details.txt.gz');
 
-A README file is required for CPAN modules since CPAN extracts the README
-file from a module distribution so that people browsing the archive
-can use it to get an idea of the module's uses. It is usually a good idea
-to provide version information here so that people can decide whether
-fixes for the module are worth downloading.
+      $pks->get_header('Columns'); # or whatever
 
+      my $ach = $pks->get_package('ACH');
+      print $ach->{'package name'}."\n";
+      print $ach->{version}->stringify."\n"; version.pm version
+      print $ach->{path}."\n";
 
-INSTALLATION
+      $pks->write_file; # XX not implemented yet
 
-To install this module, run the following commands:
+ATTRIBUTES
+  file
+    The name of the file we are parsing. Should be a path to a gzipped
+    version of CPAN's 02packages file, since that's what this whole module
+    is for.
 
-	perl Makefile.PL
-	make
-	make test
-	make install
+  header
+    The header information for the packages file.
 
-SUPPORT AND DOCUMENTATION
+  packages
+    Returns a hashref of packages, where the key XX
 
-After installing, you can find documentation for this module with the
-perldoc command.
+METHODS
+  as_string
+    Return this listing of packages as a string, suitable for printing as a
+    file.
 
-    perldoc CPAN::Packages
+  get_columns_as_list
+    Returns the columns that are in this packages file (as specified by the
+    Columns header) as a list of strings. Note that you must have set this
+    first via "set_header" or a file read.
 
-You can also look for information at:
+  get_header ($name)
+    Get the value of the specified header.
 
-    RT, CPAN's request tracker
-        http://rt.cpan.org/NoAuth/Bugs.html?Dist=CPAN-Packages
+  get_package ($name)
+    Get a hashref of info about a package.
 
-    AnnoCPAN, Annotated CPAN documentation
-        http://annocpan.org/dist/CPAN-Packages
+  header_names
+    Get a list of headers.
 
-    CPAN Ratings
-        http://cpanratings.perl.org/d/CPAN-Packages
+  package_names
+    Get a list of package names.
 
-    Search CPAN
-        http://search.cpan.org/dist/CPAN-Packages/
+  set_header ($name, $value)
+    Set the header to the specified value.
 
+  set_package ($name, \%val)
+    Set a package's info.
 
-COPYRIGHT AND LICENCE
+AUTHOR
+    Cory G Watson, "<gphat at cpan.org>"
 
-Copyright (C) 2010 Cory G Watson
+ACKNOWLEDGEMENTS
+COPYRIGHT & LICENSE
+    Copyright 2010 Cory G Watson.
 
-This program is free software; you can redistribute it and/or modify it
-under the terms of either: the GNU General Public License as published
-by the Free Software Foundation; or the Artistic License.
+    This program is free software; you can redistribute it and/or modify it
+    under the terms of either: the GNU General Public License as published
+    by the Free Software Foundation; or the Artistic License.
 
-See http://dev.perl.org/licenses/ for more information.
+    See http://dev.perl.org/licenses/ for more information.
 
